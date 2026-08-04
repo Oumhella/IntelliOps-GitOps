@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: intelliops-dev
+
+resources:
+  - ../../base
+
+images:
+  - name: docker.io/abdellatifbiti03/erp-discovery-server
+    newTag: 9efbf94529c06dce14ea2edc6c25d5c002f6a899

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-server
+  labels:
+    app.kubernetes.io/name: discovery-server
+    app.kubernetes.io/part-of: intelliops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: discovery-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: discovery-server
+        app.kubernetes.io/part-of: intelliops
+    spec:
+      containers:
+        - name: discovery-server
+          image: docker.io/abdellatifbiti03/erp-discovery-server
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8761
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5
+            failureThreshold: 30
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL

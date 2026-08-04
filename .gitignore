@@ -1,0 +1,39 @@
+# ==============================================================================
+# 🛠 IDE & Editor-Specific Files (IntelliJ, VS Code, etc.)
+# ==============================================================================
+.idea/
+*.iml
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Default IDE ignored files from your current setup
+/shelf/
+/workspace.xml
+/httpRequests/
+/dataSources/
+/dataSources.local.xml
+
+# ==============================================================================
+#  Local Kubernetes & DevOps Side-Effects (Kind, Helm, Kustomize)
+# ==============================================================================
+# Ignore local temporary installation artifacts and extracts
+/helm-temp/
+/curl_response
+*.zip
+*.sha256
+*.exe
+
+# Ignore local kubeconfig overrides or cluster test dumps
+.kube/
+kubeconfig
+*.log
+
+# ==============================================================================
+#  OS-Specific System Files
+# ==============================================================================
+Thumbs.db
+.DS_Store
