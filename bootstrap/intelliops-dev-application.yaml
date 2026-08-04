@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: intelliops-dev
+  namespace: argocd
+spec:
+  project: intelliops
+
+  source:
+    repoURL: https://github.com/Oumhella/IntelliOps-GitOps.git
+    targetRevision: feature/GitOps-setup
+    path: apps/intelliops/overlays/dev
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: intelliops-dev
+
+  syncPolicy:
+    automated:
+      enabled: false
+    syncOptions:
+      - CreateNamespace=true
