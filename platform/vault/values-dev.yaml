@@ -1,0 +1,48 @@
+global:
+  enabled: true
+  tlsDisable: true
+
+injector:
+  enabled: false
+
+server:
+  image:
+    repository: hashicorp/vault
+    tag: "2.0.3"
+    pullPolicy: IfNotPresent
+
+  standalone:
+    enabled: true
+    config: |
+      ui = true
+      disable_mlock = true
+
+      listener "tcp" {
+        tls_disable     = 1
+        address         = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+
+      storage "file" {
+        path = "/vault/data"
+      }
+
+  dataStorage:
+    enabled: true
+    size: 5Gi
+    mountPath: /vault/data
+
+  auditStorage:
+    enabled: false
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+ui:
+  enabled: true
+  serviceType: ClusterIP

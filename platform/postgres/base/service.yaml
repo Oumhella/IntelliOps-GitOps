@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: erp-db
+spec:
+  clusterIP: None  # Headless service required for stable StatefulSet network identity
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: erp-db

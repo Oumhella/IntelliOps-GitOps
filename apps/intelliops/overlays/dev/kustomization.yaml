@@ -5,7 +5,31 @@ namespace: intelliops-dev
 
 resources:
   - ../../base
-
+  - ../../../../platform/postgres/base
+  - ../../../../platform/kafka/base
+  - ../../../../platform/minio/base
 images:
   - name: docker.io/abdellatifbiti03/erp-discovery-server
-    newTag: 9efbf94529c06dce14ea2edc6c25d5c002f6a899
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-config-server
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-user-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-lead-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-abonnement-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-stock-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-paiement-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-delivery-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-notification-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-gateway-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-mcp-server
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e
+  - name: docker.io/abdellatifbiti03/erp-frontend-service
+    newTag: 296bdc45b88ca9b68bd53823e370eccdcc6c8d6e

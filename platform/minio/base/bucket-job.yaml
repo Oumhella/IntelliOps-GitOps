@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-create-bucket
+  annotations:
+    argocd.argoproj.io/sync-wave: "-5"
+spec:
+  backoffLimit: 6
+
+  template:
+    metadata:
+      labels:
+        app: minio-create-bucket
+    spec:
+      restartPolicy: Never
+
+      containers:
+        - name: create-bucket
+          image: minio/mc:RELEASE.2025-08-13T08-35-41Z
+
+          command:
+            - /bin/sh
+            - -c
+            - |
+              until mc alias set local http://minio:9000 \
+                "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD"; do
+                echo "Waiting for MinIO..."
+                sleep 5
+              done
+
+              mc mb local/invoices-erp --ignore-existing
+              mc ls local
+
+          env:
+            - name: MINIO_ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credentials
+                  key: MINIO_ROOT_USER
+
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credentials
+                  key: MINIO_ROOT_PASSWORD

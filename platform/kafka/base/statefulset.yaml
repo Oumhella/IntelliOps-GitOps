@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+spec:
+  serviceName: erp-kafka
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: erp-kafka
+
+  template:
+    metadata:
+      labels:
+        app: erp-kafka
+    spec:
+      terminationGracePeriodSeconds: 60
+
+      securityContext:
+        fsGroup: 1000
+
+      containers:
+        - name: kafka
+          image: confluentinc/cp-kafka:7.6.0
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - name: broker
+              containerPort: 29092
+            - name: controller
+              containerPort: 29093
+
+          env:
+            - name: CLUSTER_ID
+              value: MkU3OEVBNTcwNTJENDM2Qk
+
+            - name: KAFKA_NODE_ID
+              value: "1"
+
+            - name: KAFKA_PROCESS_ROLES
+              value: broker,controller
+
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+
+            - name: KAFKA_LISTENERS
+              value: PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093
+
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: PLAINTEXT://kafka-0.erp-kafka:29092
+
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME
+              value: PLAINTEXT
+
+            - name: KAFKA_CONTROLLER_LISTENER_NAMES
+              value: CONTROLLER
+
+            - name: KAFKA_CONTROLLER_QUORUM_VOTERS
+              value: 1@kafka-0.erp-kafka:29093
+
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+
+            - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: "1"
+
+            - name: KAFKA_TRANSACTION_STATE_LOG_MIN_ISR
+              value: "1"
+
+            - name: KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
+              value: "0"
+
+            - name: KAFKA_LOG_DIRS
+              value: /var/lib/kafka/data
+
+            - name: KAFKA_HEAP_OPTS
+              value: -Xms512m -Xmx512m
+
+          volumeMounts:
+            - name: kafka-storage
+              mountPath: /var/lib/kafka/data
+
+          startupProbe:
+            exec:
+              command:
+                - bash
+                - -ec
+                - kafka-broker-api-versions --bootstrap-server localhost:29092 >/dev/null
+            periodSeconds: 10
+            failureThreshold: 30
+            timeoutSeconds: 5
+
+          readinessProbe:
+            exec:
+              command:
+                - bash
+                - -ec
+                - kafka-broker-api-versions --bootstrap-server localhost:29092 >/dev/null
+            periodSeconds: 10
+            failureThreshold: 6
+            timeoutSeconds: 5
+
+          livenessProbe:
+            tcpSocket:
+              port: broker
+            periodSeconds: 20
+            failureThreshold: 6
+
+          resources:
+            requests:
+              cpu: 500m
+              memory: 768Mi
+            limits:
+              cpu: "2"
+              memory: 1536Mi
+
+      volumes:
+        - name: kafka-storage
+          persistentVolumeClaim:
+            claimName: kafka-pvc

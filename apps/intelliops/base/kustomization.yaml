@@ -3,3 +3,14 @@ kind: Kustomization
 
 resources:
   - discovery-server
+  - config-server
+  - user-service
+  - lead-service
+  - abonnement-service
+  - stock-service
+  - paiement-service
+  - delivery-service
+  - notification-service
+  - gateway-service
+  - mcp-server
+  - frontend
