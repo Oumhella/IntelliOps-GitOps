@@ -8,6 +8,7 @@ resources:
   - ../../../../platform/postgres/base
   - ../../../../platform/kafka/base
   - ../../../../platform/minio/base
+  - ingress.yaml
 images:
   - name: docker.io/abdellatifbiti03/erp-discovery-server
     newTag: 0d7e869f43504adf3c48165e25d94448e3d8b70d
