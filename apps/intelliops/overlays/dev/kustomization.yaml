@@ -21,7 +21,7 @@ images:
   - name: docker.io/abdellatifbiti03/erp-abonnement-service
     newTag: 0d7e869f43504adf3c48165e25d94448e3d8b70d
   - name: docker.io/abdellatifbiti03/erp-stock-service
-    newTag: 0d7e869f43504adf3c48165e25d94448e3d8b70d
+    newTag: e83c9eb95bb4892771fdd0f68013e31f907bb4a2
   - name: docker.io/abdellatifbiti03/erp-paiement-service
     newTag: e83c9eb95bb4892771fdd0f68013e31f907bb4a2
   - name: docker.io/abdellatifbiti03/erp-delivery-service
