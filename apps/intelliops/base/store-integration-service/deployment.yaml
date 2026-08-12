@@ -34,6 +34,16 @@ spec:
               value: "true"
             - name: SPRING_DATASOURCE_URL
               value: jdbc:postgresql://erp-db:5432/erp_integrations
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
             - name: LEAD_SERVICE_URL
               value: http://lead-service:8082
             - name: STOCK_SERVICE_URL
