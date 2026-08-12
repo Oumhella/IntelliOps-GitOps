@@ -6,3 +6,4 @@ resources:
   - pvc.yaml
   - statefulset.yaml
   - init-databases-configmap.yaml
+  - ensure-integrations-database-job.yaml
