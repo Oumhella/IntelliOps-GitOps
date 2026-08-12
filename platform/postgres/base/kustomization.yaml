@@ -7,4 +7,3 @@ resources:
   - statefulset.yaml
   - init-databases-configmap.yaml
   - ensure-integrations-database-job.yaml
-  - migrate-boutique-platform-types-job.yaml
