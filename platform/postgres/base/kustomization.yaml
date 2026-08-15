@@ -7,3 +7,4 @@ resources:
   - statefulset.yaml
   - init-databases-configmap.yaml
   - ensure-integrations-database-job.yaml
+  - ensure-analytics-database-job.yaml

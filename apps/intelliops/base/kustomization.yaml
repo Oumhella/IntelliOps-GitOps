@@ -15,4 +15,5 @@ resources:
   - store-integration-service
   - gateway-service
   - mcp-server
+  - analytics-service
   - frontend

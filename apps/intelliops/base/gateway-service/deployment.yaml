@@ -34,6 +34,8 @@ spec:
               value: "true"
             - name: SPRING_DATA_REDIS_HOST
               value: redis
+            - name: ANALYTICS_SERVICE_URI
+              value: http://analytics-service:8091
           startupProbe:
             tcpSocket:
               port: http

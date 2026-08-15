@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-ensure-analytics-database
+  annotations:
+    argocd.argoproj.io/sync-wave: "-9"
+spec:
+  backoffLimit: 6
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: ensure-database
+          image: postgres:16-alpine
+          env:
+            - { name: PGHOST, value: erp-db }
+            - name: PGUSER
+              valueFrom: { secretKeyRef: { name: postgres-credentials, key: POSTGRES_USER } }
+            - name: PGPASSWORD
+              valueFrom: { secretKeyRef: { name: postgres-credentials, key: POSTGRES_PASSWORD } }
+          command: [sh, -ec]
+          args:
+            - |
+              until pg_isready -h "$PGHOST" -U "$PGUSER" -d postgres; do sleep 3; done
+              if ! psql -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='erp_analytics'" | grep -q 1; then
+                psql -d postgres -c "CREATE DATABASE erp_analytics"
+              fi
