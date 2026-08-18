@@ -11,7 +11,7 @@ resources:
   - ingress.yaml
 images:
   - name: docker.io/abdellatifbiti03/erp-discovery-server
-    newTag: 0d7e869f43504adf3c48165e25d94448e3d8b70d
+    newTag: 89a6344740f20b7d3dca94fe90209bc67998ed3a
   - name: docker.io/abdellatifbiti03/erp-config-server
     newTag: 89a6344740f20b7d3dca94fe90209bc67998ed3a
   - name: docker.io/abdellatifbiti03/erp-user-service
