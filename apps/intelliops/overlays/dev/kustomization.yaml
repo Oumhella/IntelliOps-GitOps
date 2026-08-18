@@ -37,4 +37,4 @@ images:
   - name: docker.io/abdellatifbiti03/erp-frontend-service
     newTag: 89a6344740f20b7d3dca94fe90209bc67998ed3a
   - name: docker.io/abdellatifbiti03/erp-analytics-service
-    newTag: 89a6344740f20b7d3dca94fe90209bc67998ed3a
+    newTag: 5cba99717dadaf91978ec137de43eecad527acf7
