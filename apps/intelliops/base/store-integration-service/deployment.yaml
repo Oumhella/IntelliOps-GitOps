@@ -53,7 +53,7 @@ spec:
             - name: FRONTEND_PUBLIC_URL
               value: http://intelliops.localhost
             - name: INTEGRATION_ORDER_CURRENCY
-              value: MAD
+              value: USD,MAD,EUR
             - name: SHOPIFY_SCOPES
               value: read_orders,read_products
             - name: SHOPIFY_API_VERSION
