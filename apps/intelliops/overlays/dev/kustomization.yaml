@@ -33,7 +33,7 @@ images:
   - name: docker.io/abdellatifbiti03/erp-gateway-service
     newTag: 89a6344740f20b7d3dca94fe90209bc67998ed3a
   - name: docker.io/abdellatifbiti03/erp-mcp-server
-    newTag: d5a9095fcfc38bdcbfd17659fc7653ce8a35b64f
+    newTag: 958818f27f8240582c75306b0647886f298e6ca8
   - name: docker.io/abdellatifbiti03/erp-frontend-service
     newTag: e836c729e2f221b37a47c4cec46cd6486540b651
   - name: docker.io/abdellatifbiti03/erp-analytics-service
