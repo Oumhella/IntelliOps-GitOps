@@ -54,6 +54,14 @@ spec:
               value: http://intelliops.localhost
             - name: INTEGRATION_ORDER_CURRENCY
               value: USD,MAD,EUR
+            - name: INTERNAL_HTTP_CONNECT_TIMEOUT
+              value: 5s
+            - name: INTERNAL_HTTP_READ_TIMEOUT
+              value: 30s
+            - name: INTERNAL_HTTP_MAX_ATTEMPTS
+              value: "3"
+            - name: INTERNAL_HTTP_RETRY_BACKOFF
+              value: 500ms
             - name: SHOPIFY_SCOPES
               value: read_orders,read_products
             - name: SHOPIFY_API_VERSION
