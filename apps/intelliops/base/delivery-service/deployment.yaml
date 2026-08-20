@@ -36,6 +36,20 @@ spec:
               value: jdbc:postgresql://erp-db:5432/erp_deliveries
             - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
               value: erp-kafka:29092
+            - name: MINIO_URL
+              value: http://minio:9000
+            - name: MINIO_BUCKET_NAME
+              value: delivery-proofs
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credentials
+                  key: MINIO_ROOT_USER
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credentials
+                  key: MINIO_ROOT_PASSWORD
           startupProbe:
             tcpSocket:
               port: http
