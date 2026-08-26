@@ -16,6 +16,10 @@ spec:
         app.kubernetes.io/name: mcp-server
         app.kubernetes.io/part-of: intelliops
     spec:
+      hostAliases:
+        - ip: "75.2.113.119"
+          hostnames:
+            - "integrate.api.nvidia.com"
       containers:
         - name: mcp-server
           image: docker.io/abdellatifbiti03/erp-mcp-server
