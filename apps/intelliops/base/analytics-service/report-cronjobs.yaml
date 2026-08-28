@@ -1,0 +1,65 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: analytics-report-weekly
+  labels: { app.kubernetes.io/name: analytics-service, app.kubernetes.io/component: reporting }
+spec:
+  schedule: "15 2 * * 1"
+  timeZone: Africa/Casablanca
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: report
+              image: docker.io/abdellatifbiti03/erp-analytics-service
+              command: [python, -m, app.reports.runner, --period, WEEKLY]
+              envFrom: [{ secretRef: { name: analytics-service-secrets } }]
+              env:
+                - { name: REPORT_LOCALES, value: "en,fr,ar" }
+              resources:
+                requests: { cpu: 100m, memory: 192Mi }
+                limits: { cpu: 500m, memory: 512Mi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: { drop: [ALL] }
+          securityContext: { runAsNonRoot: true, runAsUser: 10001 }
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: analytics-report-monthly
+  labels: { app.kubernetes.io/name: analytics-service, app.kubernetes.io/component: reporting }
+spec:
+  schedule: "0 3 1 * *"
+  timeZone: Africa/Casablanca
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: report
+              image: docker.io/abdellatifbiti03/erp-analytics-service
+              command: [python, -m, app.reports.runner, --period, MONTHLY]
+              envFrom: [{ secretRef: { name: analytics-service-secrets } }]
+              env:
+                - { name: REPORT_LOCALES, value: "en,fr,ar" }
+              resources:
+                requests: { cpu: 100m, memory: 192Mi }
+                limits: { cpu: 500m, memory: 512Mi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: { drop: [ALL] }
+          securityContext: { runAsNonRoot: true, runAsUser: 10001 }
