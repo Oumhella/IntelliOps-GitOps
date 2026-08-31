@@ -32,8 +32,15 @@
 kubeconfig
 *.log
 
+# Never commit local Vault bootstrap credentials or operator output
+/platform/vault/local/
+/platform/vault/*credentials*
+/platform/vault/*unseal*
+/platform/vault/*root-token*
+
 # ==============================================================================
 #  OS-Specific System Files
 # ==============================================================================
 Thumbs.db
 .DS_Store
+rapport/

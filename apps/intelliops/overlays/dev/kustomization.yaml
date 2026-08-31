@@ -5,7 +5,36 @@ namespace: intelliops-dev
 
 resources:
   - ../../base
-
+  - ../../../../platform/postgres/base
+  - ../../../../platform/kafka/base
+  - ../../../../platform/minio/base
+  - ingress.yaml
 images:
   - name: docker.io/abdellatifbiti03/erp-discovery-server
-    newTag: 9efbf94529c06dce14ea2edc6c25d5c002f6a899
+    newTag: 89a6344740f20b7d3dca94fe90209bc67998ed3a
+  - name: docker.io/abdellatifbiti03/erp-config-server
+    newTag: 89a6344740f20b7d3dca94fe90209bc67998ed3a
+  - name: docker.io/abdellatifbiti03/erp-user-service
+    newTag: bf1b2c81a19036ca1312dc087df95019ce6a9533
+  - name: docker.io/abdellatifbiti03/erp-lead-service
+    newTag: c1db835325b29cbbd7912e8053733ed68987df09
+  - name: docker.io/abdellatifbiti03/erp-abonnement-service
+    newTag: c1db835325b29cbbd7912e8053733ed68987df09
+  - name: docker.io/abdellatifbiti03/erp-stock-service
+    newTag: c1db835325b29cbbd7912e8053733ed68987df09
+  - name: docker.io/abdellatifbiti03/erp-paiement-service
+    newTag: c1db835325b29cbbd7912e8053733ed68987df09
+  - name: docker.io/abdellatifbiti03/erp-delivery-service
+    newTag: c1db835325b29cbbd7912e8053733ed68987df09
+  - name: docker.io/abdellatifbiti03/erp-notification-service
+    newTag: c1db835325b29cbbd7912e8053733ed68987df09
+  - name: docker.io/abdellatifbiti03/erp-store-integration-service
+    newTag: 212f2ccf994c9f79b56e5efdba784caa13e679c7
+  - name: docker.io/abdellatifbiti03/erp-gateway-service
+    newTag: 89a6344740f20b7d3dca94fe90209bc67998ed3a
+  - name: docker.io/abdellatifbiti03/erp-mcp-server
+    newTag: 8fb236d9765c87cb8517c1b7bcae1772644f5b96
+  - name: docker.io/abdellatifbiti03/erp-frontend-service
+    newTag: 83a1ed27ff65287aa1a8ad2a12366a298d1428ef
+  - name: docker.io/abdellatifbiti03/erp-analytics-service
+    newTag: 83a1ed27ff65287aa1a8ad2a12366a298d1428ef

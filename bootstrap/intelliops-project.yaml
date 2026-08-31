@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: intelliops
+  namespace: argocd
+spec:
+  description: IntelliOps development platform
+
+  sourceRepos:
+    - https://github.com/Oumhella/IntelliOps-GitOps.git
+
+  destinations:
+    - namespace: intelliops-dev
+      server: https://kubernetes.default.svc
+
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

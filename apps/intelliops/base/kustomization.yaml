@@ -2,4 +2,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - redis
   - discovery-server
+  - config-server
+  - user-service
+  - lead-service
+  - abonnement-service
+  - stock-service
+  - paiement-service
+  - delivery-service
+  - notification-service
+  - store-integration-service
+  - gateway-service
+  - mcp-server
+  - analytics-service
+  - frontend

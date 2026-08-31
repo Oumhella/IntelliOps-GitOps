@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-integration-service
+  labels:
+    app.kubernetes.io/name: store-integration-service
+    app.kubernetes.io/part-of: intelliops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: store-integration-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: store-integration-service
+        app.kubernetes.io/part-of: intelliops
+    spec:
+      containers:
+        - name: store-integration-service
+          image: docker.io/abdellatifbiti03/erp-store-integration-service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8090
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: dev
+            - name: CONFIG_SERVER_URL
+              value: http://config-server:8888
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://discovery-server:8761/eureka/
+            - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+              value: "true"
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://erp-db:5432/erp_integrations
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
+            - name: LEAD_SERVICE_URL
+              value: http://lead-service:8082
+            - name: STOCK_SERVICE_URL
+              value: http://stock-service:8084
+            - name: INTEGRATION_PUBLIC_BASE_URL
+              value: https://handstand-raging-pursuant.ngrok-free.dev
+            - name: FRONTEND_PUBLIC_URL
+              value: http://intelliops.localhost
+            - name: INTEGRATION_ORDER_CURRENCY
+              value: USD,MAD,EUR
+            - name: INTERNAL_HTTP_CONNECT_TIMEOUT
+              value: 5s
+            - name: INTERNAL_HTTP_READ_TIMEOUT
+              value: 30s
+            - name: INTERNAL_HTTP_MAX_ATTEMPTS
+              value: "3"
+            - name: INTERNAL_HTTP_RETRY_BACKOFF
+              value: 500ms
+            - name: SHOPIFY_SCOPES
+              value: read_orders,read_products
+            - name: SHOPIFY_API_VERSION
+              value: "2026-07"
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL

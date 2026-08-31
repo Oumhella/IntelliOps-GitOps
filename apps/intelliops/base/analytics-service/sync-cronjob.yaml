@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: analytics-sync
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: sync
+              image: docker.io/abdellatifbiti03/erp-analytics-service
+              command: [python, -m, app.sync.runner, --once]
+              envFrom: [{ secretRef: { name: analytics-service-secrets } }]
+              resources:
+                requests: { cpu: 100m, memory: 128Mi }
+                limits: { cpu: 500m, memory: 384Mi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities: { drop: [ALL] }
+          securityContext: { runAsNonRoot: true, runAsUser: 10001 }
